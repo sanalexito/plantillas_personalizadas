@@ -93,3 +93,7 @@ saveWorkbook(mi_wb,
              overwrite = TRUE)
 
 ```
+
+Al momento la información que hemos guardado se ve así:
+
+![](images/clipboard-3171556056.png){width="531"}

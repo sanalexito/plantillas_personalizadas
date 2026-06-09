@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1d4f84655f446305ac42a8f1abcf7405.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -209,18 +209,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">descarga =</span> <span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/dataset.zip"</span>, </span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">dir_descomprimido =</span> <span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/"</span>,</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">borra_zip =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in unzip(zipfile = descarga, exdir = dir_descomprimido): error 1 al
-extraer del archivo zip</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Se borraron los files zipeados"</code></pre>
 </div>
 </div>
 <p>Hecho lo anterior vamos a tomar alguna de las tablas para visualizar su contenido y comenzar a trabajar con ella.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> foreign<span class="sc">::</span><span class="fu">read.dbf</span>(<span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/ENAID_CS.dbf"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> foreign<span class="sc">::</span><span class="fu">read.dbf</span>(<span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/ENAID_CS.dbf"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     ID_VIV       ID_PER REGION CVE_ENT CVE_MUN CVE_LOC     UPM VIV_SEL
 1 0100013.1 0100013.1.01      2      01     001    0001 0100013       1
@@ -247,45 +243,51 @@ extraer del archivo zip</code></pre>
 </div>
 <p>Vamos a tomar solo algunas variables con el propósito de ilustrar la generación de una plantilla solo para los datos muestrales.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> datos[,<span class="fu">c</span>(<span class="st">"ID_VIV"</span>, <span class="st">"CVE_ENT"</span>, <span class="st">"SEXO"</span>, <span class="st">"EDA"</span>, <span class="st">"FAC_VIV"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> datos[,<span class="fu">c</span>(<span class="st">"ID_VIV"</span>, <span class="st">"CVE_ENT"</span>, <span class="st">"SEXO"</span>, <span class="st">"EDA"</span>, <span class="st">"FAC_VIV"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="generando-plantillas-con-openxlsx" class="level3">
 <h3 class="anchored" data-anchor-id="generando-plantillas-con-openxlsx">Generando plantillas con <em>openxlsx</em></h3>
 <p>Se crea primero un libro de Excel con el comando <em>createWorkbook</em></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mi_wb <span class="ot">=</span> <span class="fu">createWorkbook</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mi_wb <span class="ot">=</span> <span class="fu">createWorkbook</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Hecho esto se van a crear las pestañas de nuestro libro de trabajo. Por cada pestaña creada se debe poner el nombre correspondiente. Pensemos así en el caso de tener solo dos pestañas en nuestro Excel y que se llamarán: “EDAD_INF” y “PONDERADORES”.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"EDAD_INF"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"PONDERADORES"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"EDAD_INF"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"PONDERADORES"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En nuestro caso únicamente pondremos datos en la hoja llamada EDAD_INF. Los parámetros que se van a usar son el nombre del libro de trabajo, la hoja y el cuadro de datos que se va a colocar. Adicionalmente se despliegan algunos otros parámetros pero el que resulta más relevante en este momento es el de estilo de tabla <em>tableStyle</em></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataTable</span>(<span class="at">wb =</span> mi_wb, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">sheet =</span> <span class="st">"EDAD_INF"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> datos[<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>,<span class="fu">c</span>(<span class="st">"ID_VIV"</span>, <span class="st">"CVE_ENT"</span>,<span class="st">"EDA"</span>)],  <span class="co"># la tabla que queremos escribir en el Excel, solo los primeros 40 registros</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">tableStyle =</span> <span class="st">"TableStyleLight14"</span>, <span class="co"># estilo de la tabla</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">startRow =</span> <span class="dv">1</span>, <span class="at">startCol =</span> <span class="dv">1</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">colNames =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">bandedCols =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">bandedRows =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">withFilter =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>               <span class="co"># keepNA = TRUE, </span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>               <span class="co"># na.string = "sin datos"</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataTable</span>(<span class="at">wb =</span> mi_wb, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">sheet =</span> <span class="st">"EDAD_INF"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> datos[<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>,<span class="fu">c</span>(<span class="st">"ID_VIV"</span>, <span class="st">"CVE_ENT"</span>,<span class="st">"EDA"</span>)],  <span class="co"># la tabla que queremos escribir en el Excel, solo los primeros 40 registros</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">tableStyle =</span> <span class="st">"TableStyleLight14"</span>, <span class="co"># estilo de la tabla</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">startRow =</span> <span class="dv">1</span>, <span class="at">startCol =</span> <span class="dv">1</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">colNames =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">bandedCols =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">bandedRows =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">withFilter =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>               <span class="co"># keepNA = TRUE, </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>               <span class="co"># na.string = "sin datos"</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En excel se puede observar en el apartado de <em>Inicio&gt;Estilos&gt;Dar formato como tabla</em> , un número que hace referencia al color. En este caso elegimos uno denotado por el número14 (puede variar el color dependiendo de la versión de Office) . Si pasas el cursor por las diferentes tablas podrás observar lo que menciono.</p>
 <p><img src="images/clipboard-3889371163.png" class="img-fluid" width="504"></p>
 <p>El libro de trabajo puede guardarse cuando tu desees para observar cómo se ha guardado la información y la manera en la que aparece el cuadro de datos. Es una buena forma de saber si visualmente sirve a tus intereses lo que acabas de hacer.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardar</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(mi_wb, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"datos_sc.xlsx"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardar</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(mi_wb, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"datos_sc.xlsx"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in file.create(to[okay]): cannot create file 'datos_sc.xlsx', reason
+'Permission denied'</code></pre>
 </div>
+</div>
+<p>Al momento la información que hemos guardado se ve así:</p>
+<p><img src="images/clipboard-3171556056.png" class="img-fluid" width="531"></p>
 
 
 </section>
