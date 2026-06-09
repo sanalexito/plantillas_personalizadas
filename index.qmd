@@ -3,7 +3,7 @@ title: "Plantillas personalizadas con R"
 author: "Alejandro Sánchez Peralta, INEGI"
 ---
 
-![](images/clipboard-2558483014.png)
+![Alejandro Sánchez Peralta, Head of Department.](images/clipboard-3327526009.png){width="170"}
 
 Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato *csv*, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.
 
@@ -99,3 +99,69 @@ saveWorkbook(mi_wb,
 Al momento la información que hemos guardado se ve así:
 
 ![](images/clipboard-3171556056.png){width="531"}
+
+### Cambiando el ancho de las columnas
+
+Es posible que los datos no se visualicen bien o que el nombre de alguna columna no sea del tamaño adecuado y deba ser más ancho. Para esto vamos a emplear el comando *setColWidths.* En este caso suelen usarse vectores para indicar a qué columnas vamos a cambiar el tamaño. De igual manera en un vector se pone el ancho requerido.
+
+Para ejemplificar de una forma mucho más visual este proceso cambiemos el contenido de una de las celdas de nuestro cuadro de datos antes de cambiar el ancho.
+
+```{r}
+# se modifica el texto de la celda
+writeData(mi_wb, sheet = 1, x = "Edad del informante seleccionado quien debe ser mayor de 18 años", startCol = 3, startRow = 2, colNames = FALSE)
+
+# ancho de columnas
+setColWidths(wb = mi_wb, sheet = 1,
+             cols = c(1, 2, 3,
+                      4, 5, 6),
+             widths = c(22, 22, 13,
+                        30, 30, 30)
+)
+
+
+
+```
+
+Véase que el texto sale de la celda C2 y aunque se modificó el ancho esto se mira raro.
+
+![](images/clipboard-199746887.png){width="639"}
+
+Para resolver esto desde R creamos un estilo que se aplicará a las celdas para que el texto se acomode de una manera adecuada. Usamos entonces la instrucción *addStyle* y *createStyle*. Este proceso puede hacerse por separado dependiendo de la complejidad del estilo que se está definiendo
+
+```{r}
+mi_estilo = createStyle(wrapText = TRUE, valign = "center", halign = "left" )
+
+addStyle(wb = mi_wb, 
+         sheet = 1, #puse el número de la hoja en lugar del nombre 
+         style = mi_estilo, 
+         rows = 1:nrow(datos)+1, 
+         cols = c(1:3), 
+         stack = TRUE, gridExpand = T)  
+
+
+```
+
+Ahora se tiene la tabla en esta forma.
+
+![](images/clipboard-3230544090.png){width="390"}
+
+### Estilo de texto para las celdas
+
+Tal como se menciona arriba, se pueden definir los estilos de manera separada para aplicarlos a determinadas celdas. Pero en este caso es importante definir los argumentos `stack = TRUE, gridExpand = T` para que los estilos se sumen en vez de reemplazarse.
+
+```{r}
+# celdas en negrita
+addStyle(wb = mi_wb, 
+         sheet = 1,
+         style = createStyle(textDecoration = "BOLD", fontName = "Times New Roman", fontSize = 12, fontColour = "red" ), 
+         rows = 1:nrow(datos)+1, 
+         cols = c(1, 2), 
+         stack = TRUE, gridExpand = T)
+saveWorkbook(mi_wb, 
+             "datos/tabla_datos.xlsx",
+             overwrite = TRUE)
+```
+
+Aquí hemos aplicado el estilo de poner negritas a las primeras dos columnas y la fuente Times New Roman, de tamaño 12.
+
+![](images/clipboard-1842851546.png){width="406"}
