@@ -3,6 +3,8 @@ title: "Plantillas personalizadas con R"
 author: "Alejandro Sánchez Peralta, INEGI"
 ---
 
+![](images/clipboard-2558483014.png)
+
 Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato *csv*, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.
 
 Una alternativa para tratar con esta situación es usar el paquete *openxlsx* de R que, además de permitir importar y exportar datos de Excel, contiene varias funciones para trabajar con variedad de **estilos de tablas y formatos, junto con la manipulación de datos celda por celda,** lo que resulta especialmente útil si estás interesado en crear plantillas.
@@ -89,7 +91,7 @@ El libro de trabajo puede guardarse cuando tu desees para observar cómo se ha g
 ```{r}
 # guardar
 saveWorkbook(mi_wb, 
-             "datos_sc.xlsx",
+             "datos/tabla_datos.xlsx",
              overwrite = TRUE)
 
 ```
