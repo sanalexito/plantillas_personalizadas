@@ -27,8 +27,8 @@ descarga_zip = function (url, descarga, dir_descomprimido, borra_zip)
 }
 
 descarga_zip(url="https://www.inegi.org.mx/contenidos/programas/enaid/2019/microdatos/enaid2019_bd_dbf.zip",
-             descarga = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/docs/dataset.zip", 
-             dir_descomprimido = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/docs/",
+             descarga = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/dataset.zip", 
+             dir_descomprimido = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/",
              borra_zip = TRUE)
 
 ```
@@ -36,7 +36,7 @@ descarga_zip(url="https://www.inegi.org.mx/contenidos/programas/enaid/2019/micro
 Hecho lo anterior vamos a tomar alguna de las tablas para visualizar su contenido y comenzar a trabajar con ella.
 
 ```{r}
-datos = foreign::read.dbf("D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/docs/ENAID_CS.dbf")
+datos = foreign::read.dbf("D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/ENAID_CS.dbf")
 names(datos)
 
 head(datos)
@@ -50,7 +50,9 @@ datos = datos[,c("ID_VIV", "CVE_ENT", "SEXO", "EDA", "FAC_VIV")]
 
 ### Generando plantillas con *openxlsx*
 
+Se crea primero un libro de Excel con el comando *createWorkbook*
+
 ```{r}
 library(openxlsx)
-tabla = createWorkbook()
+mi_wb = createWorkbook()
 ```
