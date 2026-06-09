@@ -1,5 +1,6 @@
 ---
 title: "Plantillas personalizadas con R"
+author: "Alejandro Sánchez Peralta, INEGI"
 ---
 
 Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato *csv*, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.
@@ -37,8 +38,6 @@ Hecho lo anterior vamos a tomar alguna de las tablas para visualizar su contenid
 
 ```{r}
 datos = foreign::read.dbf("D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/ENAID_CS.dbf")
-names(datos)
-
 head(datos)
 ```
 
@@ -55,4 +54,42 @@ Se crea primero un libro de Excel con el comando *createWorkbook*
 ```{r}
 library(openxlsx)
 mi_wb = createWorkbook()
+```
+
+Hecho esto se van a crear las pestañas de nuestro libro de trabajo. Por cada pestaña creada se debe poner el nombre correspondiente. Pensemos así en el caso de tener solo dos pestañas en nuestro Excel y que se llamarán: "EDAD_INF" y "PONDERADORES".
+
+```{r}
+addWorksheet(mi_wb, sheetName = "EDAD_INF")
+addWorksheet(mi_wb, sheetName = "PONDERADORES")
+```
+
+En nuestro caso únicamente pondremos datos en la hoja llamada EDAD_INF. Los parámetros que se van a usar son el nombre del libro de trabajo, la hoja y el cuadro de datos que se va a colocar. Adicionalmente se despliegan algunos otros parámetros pero el que resulta más relevante en este momento es el de estilo de tabla *tableStyle*
+
+```{r}
+writeDataTable(wb = mi_wb, 
+               sheet = "EDAD_INF",
+               x = datos[1:40,c("ID_VIV", "CVE_ENT","EDA")],  # la tabla que queremos escribir en el Excel, solo los primeros 40 registros
+               tableStyle = "TableStyleLight14", # estilo de la tabla
+               startRow = 1, startCol = 1,
+               colNames = TRUE,
+               bandedCols = TRUE,
+               bandedRows = FALSE,
+               withFilter = FALSE, 
+               # keepNA = TRUE, 
+               # na.string = "sin datos"
+)
+```
+
+En excel se puede observar en el apartado de *Inicio\>Estilos\>Dar formato como tabla* , un número que hace referencia al color. En este caso elegimos uno denotado por el número14 (puede variar el color dependiendo de la versión de Office) . Si pasas el cursor por las diferentes tablas podrás observar lo que menciono.
+
+![](images/clipboard-3889371163.png){width="504"}
+
+El libro de trabajo puede guardarse cuando tu desees para observar cómo se ha guardado la información y la manera en la que aparece el cuadro de datos. Es una buena forma de saber si visualmente sirve a tus intereses lo que acabas de hacer.
+
+```{r}
+# guardar
+saveWorkbook(mi_wb, 
+             "datos_sc.xlsx",
+             overwrite = TRUE)
+
 ```

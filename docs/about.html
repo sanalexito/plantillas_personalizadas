@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Alejandro Sánchez Peralta, INEGI">
 
-<title>Plantillas personalizadas con R – plantillas_personalizadas</title>
+<title>About – plantillas_personalizadas</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,11 +128,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -147,34 +146,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#descarga-de-archivos-desde-una-url" id="toc-descarga-de-archivos-desde-una-url" class="nav-link active" data-scroll-target="#descarga-de-archivos-desde-una-url">Descarga de archivos desde una URL</a></li>
-  <li><a href="#generando-plantillas-con-openxlsx" id="toc-generando-plantillas-con-openxlsx" class="nav-link" data-scroll-target="#generando-plantillas-con-openxlsx">Generando plantillas con <em>openxlsx</em></a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Plantillas personalizadas con R</h1>
+<h1 class="title">About</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Alejandro Sánchez Peralta, INEGI </p>
-          </div>
-  </div>
     
   
     
@@ -185,110 +171,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato <em>csv</em>, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.</p>
-<p>Una alternativa para tratar con esta situación es usar el paquete <em>openxlsx</em> de R que, además de permitir importar y exportar datos de Excel, contiene varias funciones para trabajar con variedad de <strong>estilos de tablas y formatos, junto con la manipulación de datos celda por celda,</strong> lo que resulta especialmente útil si estás interesado en crear plantillas.</p>
-<p>Dentro de las bondades de estas herramientas están poder emplear estas plantillas para re-hacer cuantas veces sea requerido un archivo con datos actualizados combinando este lenguaje de programación con los diferentes estilos condicionales de Excel, o generar un gran volumen de archivos de manera más eficiente que haciéndolo directamente en Excel.</p>
-<section id="descarga-de-archivos-desde-una-url" class="level3">
-<h3 class="anchored" data-anchor-id="descarga-de-archivos-desde-una-url">Descarga de archivos desde una URL</h3>
-<p>Para iniciar con un caso real se descargan algunas bases de datos desde el sitio web del INEGI. En este caso de la Encuesta Nacional de Acceso a la Información y Protección de Datos Personales (ENAID). Para esto ponemos una función que descarga los archivos <em>zipeados</em>, los descomprime y posteriormente borra la carpeta comprimida.</p>
+<p>About this site</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>descarga_zip <span class="ot">=</span> <span class="cf">function</span> (url, descarga, dir_descomprimido, borra_zip) </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(url, <span class="at">destfile =</span> descarga, <span class="at">mode =</span> <span class="st">"wb"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unzip</span>(<span class="at">zipfile =</span> descarga, <span class="at">exdir =</span> dir_descomprimido)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (borra_zip <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(<span class="st">"Se almacenan el file en formato .ZIP"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(<span class="st">"Se borraron los files zipeados"</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlink</span>(descarga)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">descarga_zip</span>(<span class="at">url=</span><span class="st">"https://www.inegi.org.mx/contenidos/programas/enaid/2019/microdatos/enaid2019_bd_dbf.zip"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">descarga =</span> <span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/dataset.zip"</span>, </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">dir_descomprimido =</span> <span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">borra_zip =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in unzip(zipfile = descarga, exdir = dir_descomprimido): error 1 al
-extraer del archivo zip</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Se borraron los files zipeados"</code></pre>
+<pre><code>[1] 2</code></pre>
 </div>
-</div>
-<p>Hecho lo anterior vamos a tomar alguna de las tablas para visualizar su contenido y comenzar a trabajar con ella.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> foreign<span class="sc">::</span><span class="fu">read.dbf</span>(<span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/ENAID_CS.dbf"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     ID_VIV       ID_PER REGION CVE_ENT CVE_MUN CVE_LOC     UPM VIV_SEL
-1 0100013.1 0100013.1.01      2      01     001    0001 0100013       1
-2 0100013.1 0100013.1.02      2      01     001    0001 0100013       1
-3 0100013.3 0100013.3.01      2      01     001    0001 0100013       3
-4 0100013.3 0100013.3.02      2      01     001    0001 0100013       3
-5 0100013.5 0100013.5.01      2      01     001    0001 0100013       5
-6 0100054.1 0100054.1.01      2      01     001    0001 0100054       1
-  RESULT_V N_INF N_REN NOM PAR SEXO EDA NAC_D NAC_M COD I_NIV I_ANIO C_ACT
-1       01    01    01   -   1    1  69  &lt;NA&gt;  &lt;NA&gt;   2     2      6     6
-2       01    01    02   -   2    2  68  &lt;NA&gt;  &lt;NA&gt;   1     2      6     5
-3       01    02    01   -   1    1  74  &lt;NA&gt;  &lt;NA&gt;   2     8      5     6
-4       01    02    02   -   2    2  71  &lt;NA&gt;  &lt;NA&gt;   1     2      6     5
-5       01    01    01   -   1    1  81  &lt;NA&gt;  &lt;NA&gt;   1     2      6     1
-6       01    01    01   -   1    2  76  &lt;NA&gt;  &lt;NA&gt;   2     2      4     6
-  V_ACT  POS FAC_VIV FAC_SEL UPM_DIS EST EST_DIS
-1     4 &lt;NA&gt;     486       0   00001   3    0002
-2     4 &lt;NA&gt;     486     973   00001   3    0002
-3     4 &lt;NA&gt;     486       0   00001   3    0002
-4     4 &lt;NA&gt;     486     973   00001   3    0002
-5  &lt;NA&gt;    3     486     486   00001   3    0002
-6     2    3     551       0   00002   3    0002</code></pre>
-</div>
-</div>
-<p>Vamos a tomar solo algunas variables con el propósito de ilustrar la generación de una plantilla solo para los datos muestrales.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> datos[,<span class="fu">c</span>(<span class="st">"ID_VIV"</span>, <span class="st">"CVE_ENT"</span>, <span class="st">"SEXO"</span>, <span class="st">"EDA"</span>, <span class="st">"FAC_VIV"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="generando-plantillas-con-openxlsx" class="level3">
-<h3 class="anchored" data-anchor-id="generando-plantillas-con-openxlsx">Generando plantillas con <em>openxlsx</em></h3>
-<p>Se crea primero un libro de Excel con el comando <em>createWorkbook</em></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mi_wb <span class="ot">=</span> <span class="fu">createWorkbook</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Hecho esto se van a crear las pestañas de nuestro libro de trabajo. Por cada pestaña creada se debe poner el nombre correspondiente. Pensemos así en el caso de tener solo dos pestañas en nuestro Excel y que se llamarán: “EDAD_INF” y “PONDERADORES”.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"EDAD_INF"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"PONDERADORES"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>En nuestro caso únicamente pondremos datos en la hoja llamada EDAD_INF. Los parámetros que se van a usar son el nombre del libro de trabajo, la hoja y el cuadro de datos que se va a colocar. Adicionalmente se despliegan algunos otros parámetros pero el que resulta más relevante en este momento es el de estilo de tabla <em>tableStyle</em></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataTable</span>(<span class="at">wb =</span> mi_wb, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">sheet =</span> <span class="st">"EDAD_INF"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> datos[<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>,<span class="fu">c</span>(<span class="st">"ID_VIV"</span>, <span class="st">"CVE_ENT"</span>,<span class="st">"EDA"</span>)],  <span class="co"># la tabla que queremos escribir en el Excel, solo los primeros 40 registros</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">tableStyle =</span> <span class="st">"TableStyleLight14"</span>, <span class="co"># estilo de la tabla</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">startRow =</span> <span class="dv">1</span>, <span class="at">startCol =</span> <span class="dv">1</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">colNames =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">bandedCols =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">bandedRows =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">withFilter =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>               <span class="co"># keepNA = TRUE, </span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>               <span class="co"># na.string = "sin datos"</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>En excel se puede observar en el apartado de <em>Inicio&gt;Estilos&gt;Dar formato como tabla</em> , un número que hace referencia al color. En este caso elegimos uno denotado por el número14 (puede variar el color dependiendo de la versión de Office) . Si pasas el cursor por las diferentes tablas podrás observar lo que menciono.</p>
-<p><img src="images/clipboard-3889371163.png" class="img-fluid" width="504"></p>
-<p>El libro de trabajo puede guardarse cuando tu desees para observar cómo se ha guardado la información y la manera en la que aparece el cuadro de datos. Es una buena forma de saber si visualmente sirve a tus intereses lo que acabas de hacer.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardar</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(mi_wb, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"datos_sc.xlsx"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
