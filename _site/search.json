@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Plantillas personalizadas con R",
+    "section": "",
+    "text": "Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato csv, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.\nUna alternativa para tratar con esta situación es usar el paquete openxlsx de R que, además de permitir importar y exportar datos de Excel, contiene varias funciones para trabajar con variedad de estilos de tablas y formatos, junto con la manipulación de datos celda por celda, lo que resulta especialmente útil si estás interesado en crear plantillas.\nDentro de las bondades de estas herramientas están poder emplear estas plantillas para re-hacer cuantas veces sea requerido un archivo con datos actualizados combinando este lenguaje de programación con los diferentes estilos condicionales de Excel, o generar un gran volumen de archivos de manera más eficiente que haciéndolo directamente en Excel.\n\ndescarga_zip = function (url, descarga, dir_descomprimido, borra_zip) \n{\n    download.file(url, destfile = descarga, mode = \"wb\")\n    unzip(zipfile = descarga, exdir = dir_descomprimido)\n    if (borra_zip == FALSE) {\n        print(\"Se almacenan el file en formato .ZIP\")\n    }\n    else {\n        print(\"Se borraron los files zipeados\")\n        unlink(descarga)\n    }\n}\n\ndescarga_zip(url=\"https://www.inegi.org.mx/contenidos/programas/enaid/2019/microdatos/enaid2019_bd_dbf.zip\",\n             descarga = \"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/docs/dataset.zip\", \n             dir_descomprimido = \"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/docs/\",\n             borra_zip = TRUE)\n\n[1] \"Se borraron los files zipeados\"\n\n\n\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  }
+]
