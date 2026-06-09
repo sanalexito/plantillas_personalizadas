@@ -3,7 +3,7 @@ title: "Plantillas personalizadas con R"
 author: "Alejandro Sánchez Peralta, INEGI"
 ---
 
-![Alejandro Sánchez Peralta, Head of Department.](images/clipboard-3327526009.png){width="170"}
+![](images/clipboard-3327526009.png){fig-alt="Alejandro Sánchez Peralta, Head of Department." fig-align="left" width="170"}
 
 Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato *csv*, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.
 

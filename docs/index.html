@@ -154,6 +154,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#descarga-de-archivos-desde-una-url" id="toc-descarga-de-archivos-desde-una-url" class="nav-link active" data-scroll-target="#descarga-de-archivos-desde-una-url">Descarga de archivos desde una URL</a></li>
   <li><a href="#generando-plantillas-con-openxlsx" id="toc-generando-plantillas-con-openxlsx" class="nav-link" data-scroll-target="#generando-plantillas-con-openxlsx">Generando plantillas con <em>openxlsx</em></a></li>
+  <li><a href="#cambiando-el-ancho-de-las-columnas" id="toc-cambiando-el-ancho-de-las-columnas" class="nav-link" data-scroll-target="#cambiando-el-ancho-de-las-columnas">Cambiando el ancho de las columnas</a></li>
+  <li><a href="#estilo-de-texto-para-las-celdas" id="toc-estilo-de-texto-para-las-celdas" class="nav-link" data-scroll-target="#estilo-de-texto-para-las-celdas">Estilo de texto para las celdas</a></li>
   </ul>
 </nav>
     </div>
@@ -185,6 +187,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3327526009.png" class="img-fluid figure-img" width="170"></p>
+<figcaption>Alejandro Sánchez Peralta, Head of Department.</figcaption>
+</figure>
+</div>
 <p>Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato <em>csv</em>, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.</p>
 <p>Una alternativa para tratar con esta situación es usar el paquete <em>openxlsx</em> de R que, además de permitir importar y exportar datos de Excel, contiene varias funciones para trabajar con variedad de <strong>estilos de tablas y formatos, junto con la manipulación de datos celda por celda,</strong> lo que resulta especialmente útil si estás interesado en crear plantillas.</p>
 <p>Dentro de las bondades de estas herramientas están poder emplear estas plantillas para re-hacer cuantas veces sea requerido un archivo con datos actualizados combinando este lenguaje de programación con los diferentes estilos condicionales de Excel, o generar un gran volumen de archivos de manera más eficiente que haciéndolo directamente en Excel.</p>
@@ -279,15 +287,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardar</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(mi_wb, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"datos_sc.xlsx"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"datos/tabla_datos.xlsx"</span>,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in file.create(to[okay]): cannot create file 'datos_sc.xlsx', reason
-'Permission denied'</code></pre>
-</div>
 </div>
 <p>Al momento la información que hemos guardado se ve así:</p>
 <p><img src="images/clipboard-3171556056.png" class="img-fluid" width="531"></p>
+</section>
+<section id="cambiando-el-ancho-de-las-columnas" class="level3">
+<h3 class="anchored" data-anchor-id="cambiando-el-ancho-de-las-columnas">Cambiando el ancho de las columnas</h3>
+<p>Es posible que los datos no se visualicen bien o que el nombre de alguna columna no sea del tamaño adecuado y deba ser más ancho. Para esto vamos a emplear el comando <em>setColWidths.</em> En este caso suelen usarse vectores para indicar a qué columnas vamos a cambiar el tamaño. De igual manera en un vector se pone el ancho requerido.</p>
+<p>Para ejemplificar de una forma mucho más visual este proceso cambiemos el contenido de una de las celdas de nuestro cuadro de datos antes de cambiar el ancho.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># se modifica el texto de la celda</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeData</span>(mi_wb, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">x =</span> <span class="st">"Edad del informante seleccionado quien debe ser mayor de 18 años"</span>, <span class="at">startCol =</span> <span class="dv">3</span>, <span class="at">startRow =</span> <span class="dv">2</span>, <span class="at">colNames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ancho de columnas</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setColWidths</span>(<span class="at">wb =</span> mi_wb, <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">22</span>, <span class="dv">13</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">30</span>, <span class="dv">30</span>, <span class="dv">30</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Véase que el texto sale de la celda C2 y aunque se modificó el ancho esto se mira raro.</p>
+<p><img src="images/clipboard-199746887.png" class="img-fluid" width="639"></p>
+<p>Para resolver esto desde R creamos un estilo que se aplicará a las celdas para que el texto se acomode de una manera adecuada. Usamos entonces la instrucción <em>addStyle</em> y <em>createStyle</em>. Este proceso puede hacerse por separado dependiendo de la complejidad del estilo que se está definiendo</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mi_estilo <span class="ot">=</span> <span class="fu">createStyle</span>(<span class="at">wrapText =</span> <span class="cn">TRUE</span>, <span class="at">valign =</span> <span class="st">"center"</span>, <span class="at">halign =</span> <span class="st">"left"</span> )</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">addStyle</span>(<span class="at">wb =</span> mi_wb, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">sheet =</span> <span class="dv">1</span>, <span class="co">#puse el número de la hoja en lugar del nombre </span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> mi_estilo, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">rows =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(datos)<span class="sc">+</span><span class="dv">1</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>), </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">stack =</span> <span class="cn">TRUE</span>, <span class="at">gridExpand =</span> T)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ahora se tiene la tabla en esta forma.</p>
+<p><img src="images/clipboard-3230544090.png" class="img-fluid" width="390"></p>
+</section>
+<section id="estilo-de-texto-para-las-celdas" class="level3">
+<h3 class="anchored" data-anchor-id="estilo-de-texto-para-las-celdas">Estilo de texto para las celdas</h3>
+<p>Tal como se menciona arriba, se pueden definir los estilos de manera separada para aplicarlos a determinadas celdas. Pero en este caso es importante definir los argumentos&nbsp;<code>stack = TRUE, gridExpand = T</code>&nbsp;para que los estilos se sumen en vez de reemplazarse.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># celdas en negrita</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addStyle</span>(<span class="at">wb =</span> mi_wb, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="fu">createStyle</span>(<span class="at">textDecoration =</span> <span class="st">"BOLD"</span>, <span class="at">fontName =</span> <span class="st">"Times New Roman"</span>, <span class="at">fontSize =</span> <span class="dv">12</span>, <span class="at">fontColour =</span> <span class="st">"red"</span> ), </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">rows =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(datos)<span class="sc">+</span><span class="dv">1</span>, </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">stack =</span> <span class="cn">TRUE</span>, <span class="at">gridExpand =</span> T)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(mi_wb, </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"datos/tabla_datos.xlsx"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Aquí hemos aplicado el estilo de poner negritas a las primeras dos columnas y la fuente Times New Roman, de tamaño 12.</p>
+<p><img src="images/clipboard-1842851546.png" class="img-fluid" width="406"></p>
 
 
 </section>
