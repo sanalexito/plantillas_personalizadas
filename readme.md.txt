@@ -1,0 +1,1 @@
+Este es un repositorio sobre cómo generar plantillas personalizadas de Excel usando la librería openxlsx de R.
