@@ -98,7 +98,7 @@ saveWorkbook(mi_wb,
 
 Al momento la información que hemos guardado se ve así:
 
-![](images/clipboard-3171556056.png){width="531"}
+![](images/clipboard-3171556056.png){width="497"}
 
 ### Cambiando el ancho de las columnas
 
@@ -124,7 +124,7 @@ setColWidths(wb = mi_wb, sheet = 1,
 
 Véase que el texto sale de la celda C2 y aunque se modificó el ancho esto se mira raro.
 
-![](images/clipboard-199746887.png){width="639"}
+![](images/clipboard-199746887.png){width="671"}
 
 Para resolver esto desde R creamos un estilo que se aplicará a las celdas para que el texto se acomode de una manera adecuada. Usamos entonces la instrucción *addStyle* y *createStyle*. Este proceso puede hacerse por separado dependiendo de la complejidad del estilo que se está definiendo
 
@@ -143,7 +143,7 @@ addStyle(wb = mi_wb,
 
 Ahora se tiene la tabla en esta forma.
 
-![](images/clipboard-3230544090.png){width="390"}
+![](images/clipboard-3230544090.png){width="415"}
 
 ### Estilo de texto para las celdas
 
