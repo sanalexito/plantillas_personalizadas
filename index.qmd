@@ -3,7 +3,7 @@ title: "Plantillas personalizadas con R"
 author: "Alejandro Sánchez Peralta, INEGI"
 ---
 
-![](images/clipboard-3327526009.png){fig-alt="Alejandro Sánchez Peralta, Head of Department." fig-align="left" width="170"}
+![](images/clipboard-3327526009.png){fig-alt="Alejandro Sánchez Peralta, Head of Department." fig-align="left" width="218"}
 
 Cuando se termina la fase de procesamiento de datos o incluso el análisis exploratorio de un conjunto de datos es usual que se entreguen resultados en un formato que resulte familiar a un público amplio. Partiendo de archivos en R uno podría optar por el archivo en formato *csv*, sim embargo esto puede no resultar tan práctico por ser muy básico y requerir más trabajo que puede automatizarse.
 
@@ -16,22 +16,22 @@ Dentro de las bondades de estas herramientas están poder emplear estas plantill
 Para iniciar con un caso real se descargan algunas bases de datos desde el sitio web del INEGI. En este caso de la Encuesta Nacional de Acceso a la Información y Protección de Datos Personales (ENAID). Para esto ponemos una función que descarga los archivos *zipeados*, los descomprime y posteriormente borra la carpeta comprimida.
 
 ```{r}
-descarga_zip = function (url, descarga, dir_descomprimido, borra_zip) 
+descarga_zip = function (url, descargaZipen, descomprimeZipen, borra_zip) 
 {
-    download.file(url, destfile = descarga, mode = "wb")
-    unzip(zipfile = descarga, exdir = dir_descomprimido)
+    download.file(url, destfile = descargaZipen, mode = "wb")
+    unzip(zipfile = descargaZipen, exdir = descomprimeZipen)
     if (borra_zip == FALSE) {
         print("Se almacenan el file en formato .ZIP")
     }
     else {
         print("Se borraron los files zipeados")
-        unlink(descarga)
+        unlink(descargaZipen)
     }
 }
 
 descarga_zip(url="https://www.inegi.org.mx/contenidos/programas/enaid/2019/microdatos/enaid2019_bd_dbf.zip",
-             descarga = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/dataset.zip", 
-             dir_descomprimido = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/",
+             descargaZipen = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/dataset.zip", 
+             descomprimeZipen = "D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/",
              borra_zip = TRUE)
 
 ```

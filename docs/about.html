@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – plantillas_personalizadas</title>
+<title>Más estilos – Plantillas Excel desde R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">plantillas_personalizadas</span>
+    <span class="navbar-title">Plantillas Excel desde R</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./about.html" aria-current="page"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Más estilos</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -146,15 +146,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#formatear-variables-numéricas" id="toc-formatear-variables-numéricas" class="nav-link active" data-scroll-target="#formatear-variables-numéricas">Formatear variables numéricas</a></li>
+  <li><a href="#estilo-condicional" id="toc-estilo-condicional" class="nav-link" data-scroll-target="#estilo-condicional">Estilo condicional</a></li>
+  <li><a href="#guardando-el-libro-con-la-plantilla" id="toc-guardando-el-libro-con-la-plantilla" class="nav-link" data-scroll-target="#guardando-el-libro-con-la-plantilla">Guardando el libro con la plantilla</a></li>
+  <li><a href="#miscelánea" id="toc-miscelánea" class="nav-link" data-scroll-target="#miscelánea">Miscelánea</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Más estilos</h1>
 </div>
 
 
@@ -171,15 +180,138 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>About this site</p>
+<section id="formatear-variables-numéricas" class="level3">
+<h3 class="anchored" data-anchor-id="formatear-variables-numéricas">Formatear variables numéricas</h3>
+<p>Cuando se presentan datos provenientes de distintas fuentes es necesario ajustar el formato de acuerdo con sus fuentes. Por ejemplo números decimales o divisas. Esto se consigue definiendo un estilo que incluya el formato de los números <em>createStyle(numFmt = “0.00”)</em>, que hace referencia a un número con dos cifras decimales.</p>
+<p>Vamos a crear otro libro para llevar a cabo este ejemplo</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mi_wb <span class="ot">=</span> <span class="fu">createWorkbook</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"Edad_numerica"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> foreign<span class="sc">::</span><span class="fu">read.dbf</span>(<span class="st">"D:/OneDrive - INEGI/Documents/varios/plantillas_personalizadas/datos/ENAID_CS.dbf"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">=</span> datos[,<span class="fu">c</span>(<span class="st">"ID_VIV"</span>,<span class="st">"EDA"</span>, <span class="st">"SEXO"</span>,<span class="st">"CVE_ENT"</span>, <span class="st">"FAC_VIV"</span>)]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>     ID_VIV EDA SEXO CVE_ENT FAC_VIV
+1 0100013.1  69    1      01     486
+2 0100013.1  68    2      01     486
+3 0100013.3  74    1      01     486
+4 0100013.3  71    2      01     486
+5 0100013.5  81    1      01     486
+6 0100054.1  76    2      01     551</code></pre>
 </div>
+</div>
+<p>Nótese en particular que la variable CVE_ENT tiene ceros a la izquierda, lo que puede resultar en algún error. Podemos modificar el formato de las variables desde R de la siguiente manera.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>l_var <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"EDA"</span>, <span class="st">"CVE_ENT"</span>, <span class="st">"FAC_VIV"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> l_var){datos[[i]] <span class="ot">=</span>  <span class="fu">as.numeric</span>(datos[[i]])}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(datos[[<span class="st">"EDA"</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p>Una vez que nuestras variables tienen el formato requerido se pueden poner otros atributos para el cuadro de datos con el que se esté trabajando.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataTable</span>(<span class="at">wb =</span> mi_wb,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">sheet =</span> <span class="st">"Edad_numerica"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> datos)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">addStyle</span>(<span class="at">wb=</span>mi_wb, <span class="st">"Edad_numerica"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="fu">createStyle</span>(<span class="at">numFmt =</span> <span class="st">"0.0"</span>), </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">rows =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(datos)<span class="sc">+</span><span class="dv">1</span>, <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">stack =</span> <span class="cn">TRUE</span>, <span class="at">gridExpand =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">addStyle</span>(<span class="at">wb=</span>mi_wb, <span class="st">"Edad_numerica"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="fu">createStyle</span>(<span class="at">numFmt =</span> <span class="st">"0.000"</span>), </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">rows =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(datos)<span class="sc">+</span><span class="dv">1</span>, <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">5</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">stack =</span> <span class="cn">TRUE</span>, <span class="at">gridExpand =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ahora las columnas de edad (EDA) y el FAC_VIV tienen decimales.</p>
+<p><img src="images/clipboard-9065003.png" class="img-fluid" width="477"></p>
+</section>
+<section id="estilo-condicional" class="level3">
+<h3 class="anchored" data-anchor-id="estilo-condicional">Estilo condicional</h3>
+<p>Los estilos se aplican indicando la celda (renglón y columna) que nos interesa modificar. Es decir, que si se busca modificar la celda A12, la columna es 1 y el rengón es 12. Y dado que en R se puede saber el renglón en donde se ubican valores que cumplen con determinada condición para alguna variable, es sencillo aprovechar la lógica mencionada arriba para aplicar estilos que ahora dependan de los valores. Esto es a lo que se denomina formato condicional.</p>
+<p>Si nos fijamos en la distribución de frecuencias de la variable FAC_VIV podemos observar que hay valores entre 130 y 150:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>datos[[<span class="st">"FAC_VIV"</span>]] <span class="sc">|&gt;</span> <span class="fu">table</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+133 137 148 151 153 154 
+ 10   8  22  35   9   9 </code></pre>
+</div>
+</div>
+<p>Empleando el comando <em>which</em> de R podemos conocer su ubicación en el vector de datos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="dv">130</span> <span class="sc">&lt;</span> datos[[<span class="st">"FAC_VIV"</span>]] <span class="sc">&amp;</span> datos[[<span class="st">"FAC_VIV"</span>]] <span class="sc">&lt;</span> <span class="dv">150</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  3329  3330  3331  3332  3333  3334  3335  3336  3337  3338  3555  3556
+[13]  3557  3558  3559  3560  3635  3636  3637  3638  3639  3640  3641  3642
+[25] 49433 49434 49435 49436 49437 49438 49439 49440 49441 49442 49443 49444
+[37] 49445 49446 49447 49448</code></pre>
+</div>
+</div>
+<p>Una vez obtenida esta información podemos aplicar algún estilo para diferenciarlos dentro de nuestra tabla. Esto es útil porque puede verse que varios de estos valores están cerca de la posición 50 000, lo que podría dificultar su búsqueda manual.</p>
+<p>Definamos entonces un estilo que ponga relleno y borde a las celdas en el cuadro de datos que estamos manejando, pero solamente a las posiciones que se han señalado arriba.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">addStyle</span>(<span class="at">wb =</span> mi_wb, <span class="st">"Edad_numerica"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>         <span class="co"># crear estilo de color de relleno</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="fu">createStyle</span>(<span class="at">fgFill =</span> <span class="st">"#E6B8B7"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">border =</span> <span class="fu">c</span>(<span class="st">"top"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">borderColour =</span> <span class="fu">c</span>(<span class="st">"#DA9694"</span>, <span class="st">"#DA9694"</span>)),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         <span class="co"># filas a las que se va a aplicar el estilo</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">rows =</span> <span class="fu">which</span>(<span class="dv">130</span> <span class="sc">&lt;</span> <span class="fu">as.numeric</span>(datos[[<span class="st">"FAC_VIV"</span>]]) <span class="sc">&amp;</span> <span class="fu">as.numeric</span>(datos[[<span class="st">"FAC_VIV"</span>]]) <span class="sc">&lt;</span> <span class="dv">150</span>)<span class="sc">+</span><span class="dv">1</span>, <span class="co"># + 1 para saltarse la primera fila</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">cols =</span> <span class="dv">5</span>, </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">stack =</span> <span class="cn">TRUE</span>, <span class="at">gridExpand =</span> T)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># estilo para edades mayores a 60 años</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">addStyle</span>(<span class="at">wb =</span> mi_wb, <span class="st">"Edad_numerica"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="fu">createStyle</span>(<span class="at">fgFill =</span> <span class="st">"yellow"</span>,  </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                             <span class="at">border =</span> <span class="fu">c</span>(<span class="st">"top"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                             <span class="at">borderColour =</span> <span class="fu">c</span>(<span class="st">"#DA9694"</span>, <span class="st">"#DA9694"</span>)),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">rows =</span> <span class="fu">which</span>(<span class="fu">as.numeric</span>(datos[[<span class="st">"EDA"</span>]])<span class="sc">&gt;</span> <span class="dv">60</span>)<span class="sc">+</span><span class="dv">1</span>, </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">cols =</span> <span class="dv">2</span>, </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">stack =</span> <span class="cn">TRUE</span>, <span class="at">gridExpand =</span> T)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># un tercer estilo para mujeres menoresde 18 años</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="fu">addStyle</span>(<span class="at">wb =</span> mi_wb, <span class="st">"Edad_numerica"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="fu">createStyle</span>(<span class="at">fgFill =</span> <span class="st">"#D7E4BC"</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                             <span class="at">border =</span> <span class="fu">c</span>(<span class="st">"top"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>                             <span class="at">borderColour =</span> <span class="fu">c</span>(<span class="st">"#C4D79B"</span>, <span class="st">"#C4D79B"</span>)),</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">rows =</span> <span class="fu">which</span>(datos[[<span class="st">'EDA'</span>]]<span class="sc">&lt;</span><span class="dv">18</span> <span class="sc">&amp;</span> <span class="fu">as.numeric</span>(datos[[<span class="st">"SEXO"</span>]])<span class="sc">%in%</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">1</span>, </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">stack =</span> <span class="cn">TRUE</span>, <span class="at">gridExpand =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Podemos ver entonces cómo es que se aplicó el formato condicional a las celdas que cumplen con los filtros. En verde mujeres menores de 18 años; en amarillo pobación mayor de 60 años y en color rosa los factores menores de 150.</p>
+<p><img src="images/clipboard-3783970702.png" class="img-fluid" width="479"></p>
+</section>
+<section id="guardando-el-libro-con-la-plantilla" class="level3">
+<h3 class="anchored" data-anchor-id="guardando-el-libro-con-la-plantilla">Guardando el libro con la plantilla</h3>
+<p>Este proceso se puede llevar a cabo en cualquier momento, pero una vez que consideres tener lo que ocupas en la plantilla lo salvas al final.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(mi_wb, <span class="st">"datos/tabla_datos2.xlsx"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="miscelánea" class="level3">
+<h3 class="anchored" data-anchor-id="miscelánea">Miscelánea</h3>
+<p>A veces puede requerirse modificar la altura de las celdas o bien podriamos requerir agregar muchas hojas o quizás copiar una hoja específica. Esto es sencillo con los siguientes chunks</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiar altura de celdas</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setRowHeights</span>(mi_wb, <span class="st">"Edad_numerica"</span>,         </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">rows =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),          </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">33</span>,<span class="dv">33</span>))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar hojas </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>nom_hojas <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Datos_1"</span>, <span class="st">"Datos_44"</span>, <span class="st">"Central"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> nom_hojas ){<span class="fu">addWorksheet</span>(mi_wb, <span class="at">sheetName =</span> i)}</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Copiar una hoja</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cloneWorksheet</span>(mi_wb, <span class="at">sheetName =</span> <span class="st">"Edad_bis"</span>, <span class="at">clonedSheet =</span> <span class="st">"Edad_numerica"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(mi_wb, <span class="st">"datos/tabla_datos2.xlsx"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

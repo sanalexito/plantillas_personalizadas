@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "plantillas_personalizadas"
+  title: "Plantillas Excel desde R"
   navbar:
     left:
       - href: index.qmd
